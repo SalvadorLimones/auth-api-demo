@@ -1,0 +1,14 @@
+[
+    {
+        "username": "user1",
+        "password": "1",
+        "todolist": [
+            "bevásárlás"
+        ]
+    },
+    {
+        "username": "user2",
+        "password": "2",
+        "todolist": []
+    }
+]
