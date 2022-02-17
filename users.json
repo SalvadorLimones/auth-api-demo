@@ -10,5 +10,33 @@
         "username": "user2",
         "password": "2",
         "todolist": []
+    },
+    {
+        "username": "first",
+        "password": "1",
+        "todolist": [
+            "valami",
+            "valami",
+            "lalala"
+        ]
+    },
+    {
+        "username": "third",
+        "password": "3",
+        "todolist": []
+    },
+    {
+        "username": "forth",
+        "password": "4",
+        "todolist": [
+            "bbbbbbbb"
+        ]
+    },
+    {
+        "username": "Bence",
+        "password": "b",
+        "todolist": [
+            "h"
+        ]
     }
 ]
