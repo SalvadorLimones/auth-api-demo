@@ -9,6 +9,8 @@ app.use(cors());
 
 const users = require("./users.json");
 
+const sessions = {};
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
@@ -35,12 +37,12 @@ app.post("/api/signup", (req, res) => {
 });
 
 app.get("/api/todo", (req, res) => {
-  const authHeader = req.header("Authorization");
-  if (!authHeader) return res.sendStatus(401);
+  const sessionID = req.header("Authorization");
+  if (!sessionID) return res.sendStatus(401);
 
-  const credentials = authHeader.split("&&&");
-  const username = credentials[0];
-  const password = credentials[1];
+  const sessionUser = sessions[sessionID];
+  const username = sessionUser.username;
+  const password = sessionUser.password;
   const user = users.find(
     (user) => username === user.username && password === user.password
   );
@@ -51,12 +53,12 @@ app.get("/api/todo", (req, res) => {
 });
 
 app.post("/api/todo", (req, res) => {
-  const authHeader = req.header("Authorization");
-  if (!authHeader) return res.sendStatus(401);
+  const sessionID = req.header("Authorization");
+  if (!sessionID) return res.sendStatus(401);
 
-  const credentials = authHeader.split("&&&");
-  const username = credentials[0];
-  const password = credentials[1];
+  const sessionUser = sessions[sessionID];
+  const username = sessionUser.username;
+  const password = sessionUser.password;
   const user = users.find(
     (user) => username === user.username && password === user.password
   );
@@ -81,7 +83,14 @@ app.post("/api/login", (req, res) => {
   );
 
   if (!user) return res.sendStatus(401);
-  return res.sendStatus(200);
+  let sessionId = Math.random().toString();
+  sessions[sessionId] = user;
+  console.log(sessions);
+  setTimeout(() => {
+    delete sessions[sessionId];
+    console.log("session ended");
+  }, 10 * 1000);
+  res.json(sessionId);
 });
 
 app.listen(port, () => {
